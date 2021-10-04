@@ -1,21 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import ColorPalette from './screens/ColorPalette';
+import { createStackNavigator } from '@react-navigation/stack';
+import Hooks from './screens/Hooks';
+import Form from './screens/Form';
+import Home from './screens/Home';
 
-export default function App() {
+const Stack = createStackNavigator(); //stackNavigator oluşturma
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        {/* İstenilen ekranların stack içine aktarılması.*/}
+        {/* Bu ekranlardan ilk olarak ilk eklenen ekran gözükecektir  */}
+        <Stack.Screen name="Ana Sayfa" component={Home} />
+        <Stack.Screen
+          name="ColorPalette"
+          component={ColorPalette}
+          options={({ route }) => ({ title: route.params.paletteName })}
+          //Açılacak ekranın başlığının seçilen renk paletine göre belirlenmesi
+        />
+        <Stack.Screen name="Hooks" component={Hooks} />
+        <Stack.Screen name="Form" component={Form} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
